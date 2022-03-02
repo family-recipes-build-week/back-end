@@ -1,15 +1,8 @@
-const express = require('express');
-const server = express();
+const server = require('./api/server')
 
-require('dotenv').config();
+// eslint-disable-next-line no-undef
+const PORT = process.env.PORT || 9000
 
-const PORT = process.env.PORT || 9000;
-
-server.listen(PORT, () => {
-    console.log(`listening n port ${PORT}`);
-    console.log(process.env.MESSAGE);
-});
-
-server.use('*', (req, res) => {
-    res.send(`<h1>Hello There</h1>`);
-});
+server.listen(PORT, () =>  {
+    console.log(`listening on port ${PORT}`)
+})
