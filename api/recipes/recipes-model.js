@@ -26,6 +26,10 @@ async function getRecipeById(id) {
   .where({'recipes.id': 'recipeId', 'recipes.user_id': 'userId'})
 
   if(recipe) {
+    const recipes = await db('recipes')
+      .select('recipes.title')
+      .where({'recipes.id': id })
+
     const ingredients = await db('ingredients')
     .join('recipes', 'recipes.id', 'ingredients_id')
     .select('ingredient_name')
@@ -41,7 +45,7 @@ async function getRecipeById(id) {
       .select('tags.tag')
       .where({'tags.recipe_id': id})
 
-    const result = { ...recipe, ingredients, instructions, tags }
+    const result = { ...recipe, recipes, ingredients, instructions, tags }
     return result;
   } else {
     return null;
