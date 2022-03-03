@@ -1,4 +1,7 @@
 const User = require('../api/users/users-model');
+const { JWT_SECRET } = require('../config/secrets');
+const { findBy } = require('../api/users/users-model');
+const jwt = require('jsonwebtoken');
 
 function restricted(req, res, next) {
   if(req.session.user && req.session) {
@@ -25,20 +28,29 @@ async function checkUsernameFree(req, res, next)  {
   }
 }
 
-async function checkUsernameExists(req, res, next) {
+
+
+const checkUsernameExists = async (req, res, next) => {
   try {
-    const users = await User.findBy({ username: req.body.username })
-    if (users.length) {
-      req.user = users[0]
-      next()
+    const [user] = await findBy({
+      username: req.body.username
+    })
+    if(!user){
+      next({
+        status: 422,
+        message: 'Invalid Credentials'
+      })
+    } else {
+        req.user = user
+        next()
     }
-    else {
-      next({ message: "Invalid credentials", status: 401 })
-    }
-  } catch (err) {
+  } catch(err) {
     next(err)
   }
 }
+
+
+
 
 function checkPasswordLength(req, res, next) {
   if (!req.body.password || req.body.password.length < 3) {

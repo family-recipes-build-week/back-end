@@ -8,12 +8,12 @@ exports.seed = function(knex, Promise) {
         {
         "id": 1,
         "username": "keisha", 
-        "password": "1234",
+        "password": "$2a$31$vj2aWeooz7lHOusaG2C7ye",
       }, 
       {
         "id": 2,
-        "username": "wallace",
-        "password": "1234",
+        "username": "kei",
+        "password": "$2a$31$nQr/EJNqFNopgptOKXroeu",
       }, 
     ]);
   });
