@@ -47,16 +47,8 @@ exports.up = async function(knex, Promise) {
       });
     
       await knex.schema.createTable('tags', tbl => {
-        tbl.increments();
-    
-        tbl
-          .integer('recipe_id')
-          .notNullable()
-          .references('id')
-          .inTable('recipes')
-          .onDelete('CASCADE')
-          .onUpdate('CASCADE')
-    
+        tbl.increments('tags_id');
+  
         tbl
           .string('tag')
           .notNullable();
