@@ -20,29 +20,9 @@ router.get('/', async (req, res, next) => {
 }
 });
 
-// router.get('/:id',  (req, res) => {
-//  const recipeId = req.params.id
-//  const userId = req.params.user_id // are you sure? req.user.id
-
-//   Recipes
-//     .getRecipeById(recipeId, userId)
-//     .then(recipe => {
-//       if(!recipe) {
-//         res.status(404).json({message: 'No recipe found with this ID for current user.'})
-//       } else {
-//         res.status(200).json({recipe});
-//       }
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json({err})
-//     });
-// });
-
 router.post('/', restricted, (req, res) => {
   const recipe = req.body;
   const userId = req.user.id
-  // console.log(recipe);
 
   Recipes
     .addRecipe(recipe, userId)
@@ -50,7 +30,6 @@ router.post('/', restricted, (req, res) => {
       res.status(201).json(recipes);
     })
     .catch(err => {
-      // s
       res.status(500).json({err})
     });
 });

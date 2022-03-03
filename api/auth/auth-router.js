@@ -7,8 +7,7 @@ const { JWT_SECRET } = require('../../config/secrets');
 const Users = require('../users/users-model');
 const { 
   checkPasswordLength, 
-  checkUsernameExists, 
-  checkUsernameFree,
+  checkUsernameExists
 } = require('../../middleware/auth-middleware');
 
 
@@ -57,43 +56,22 @@ router.post('/login', checkUsernameExists, (req, res, next) => {
   }
 })
 
-// router.post('/login', (req, res, next) => {
-//   let { username, password } = req.body
+// CAN LOGOUT A USER
 
-//   Users.findBy({ username })
-//     .first()
-//     .then(user => {
-//       if(user && bcrypt.genSalt(password, user.password)) {
-//         const token = buildToken(user)
-//         res.status(200).json({
-//           username: user.username,
-//           // id: user.id,
-//           token: token,
-//           message: `Welcome ${user.username}`
-//         })
-//       } else {
-//         res.status(401).json({
-//           message: 'Invalid Credentials'
-//         })
+
+// router.get("/logout", (req, res, next) => {
+//   if(req.session){
+//     req.session.destroy(err => {
+//       if(err) {
+//         next(err)
+//       }else{
+//         res.status(200).json({ message: 'logged out'})
 //       }
 //     })
-// })
-
-
-
-router.get("/logout", (req, res, next) => {
-  if(req.session.user){
-    req.session.destroy(err => {
-      if(err) {
-        next(err)
-      }else{
-        res.status(200).json({ message: 'logged out'})
-      }
-    })
-  } else{
-    res.status(200).json({ message: 'no session'})
-  }
-});
+//   } else{
+//     res.status(200).json({ message: 'no session'})
+//   }
+// });
 
 // router.get('/', restricted, async (req, res, next) => {
 //   try {

@@ -28,8 +28,6 @@ async function checkUsernameFree(req, res, next)  {
   }
 }
 
-
-
 const checkUsernameExists = async (req, res, next) => {
   try {
     const [user] = await findBy({
@@ -48,9 +46,6 @@ const checkUsernameExists = async (req, res, next) => {
     next(err)
   }
 }
-
-
-
 
 function checkPasswordLength(req, res, next) {
   if (!req.body.password || req.body.password.length < 3) {
