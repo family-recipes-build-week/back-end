@@ -1,6 +1,10 @@
 const db = require('../../data/db-config');
 
 
+// want to make this to where entire recipes pop up??
+// with ingredients && directions included 
+// or shall i make another function?
+//
 // async function getRecipes() {
 //   try {
 //     return db('recipes')
@@ -17,55 +21,25 @@ function getRecipes() {
   return db('recipes')
 }
 
-  // let tags = await db('recipes')
-  //   .where({'recipes.user_id': 'userId'})
-  //   .join('tags', 'tags.recipe_id', 'recipes.id')
-  //   .select('tags.tag as tags', 'tags.recipe_id');
-
-  // let recipes = await db('recipes')
-  // .where({'recipes.user_id': 'userId'})
-  // .select('recipes.*')
-
-
-  // await recipes.forEach(recipe => {
-  //   recipe.tags = [];
-  //   tags.forEach(tag => {
-  //     if(recipe.id === tag.recipe_id) {
-  //       recipe.tags.push(tag.tags);
-  //     } else {
-  //       return false;
-  //     }
-  //   });
-  // });
-  // console.log(recipes);
-  // return recipes;
-
-
-async function getRecipeById(recipeId) {
+async function getRecipeById(id) {
   const recipe = await db('recipes')
   .where({'recipes.id': 'recipeId', 'recipes.user_id': 'userId'})
 
-
-
-  // .where({'recipes.id': recipeId, 'recipes.user_id': userId}) // this line ??
-  // .first();
-
-
   if(recipe) {
     const ingredients = await db('ingredients')
-    .join('recipes', 'recipes.id', 'ingredients.recipe_id')
-    .select('ingredients.name')
-    .where({'ingredients.recipe_id': recipeId })
+    .join('recipes', 'recipes.id', 'ingredients_id')
+    .select('ingredient_name')
+    .where({ 'ingredients_id': id })
 
     const instructions = await db('instructions')
-      .join('recipes', 'recipes.id', 'instructions.recipe_id')
-      .select('instructions.name')
-      .where({'instructions.recipe_id': recipeId })
+      .join('recipes', 'recipes.id', 'instructions_id')
+      .select('instruction_steps')
+      .where({'instructions_id': id })
 
     const tags = await db('tags')
       .join('recipes', 'recipes.id', 'tags.recipe_id')
       .select('tags.tag')
-      .where({'tags.recipe_id': recipeId})
+      .where({'tags.recipe_id': id})
 
     const result = { ...recipe, ingredients, instructions, tags }
     return result;

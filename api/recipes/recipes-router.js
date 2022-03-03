@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Recipes = require('./recipes-model');
-const restricted = require('../auth/restricted-middleware');
+const restricted = require('../../middleware/restricted-middleware');
 
 router.get('/:id', async (req, res, next) => {
   try {

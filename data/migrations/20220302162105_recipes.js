@@ -11,12 +11,6 @@ exports.up = async function(knex, Promise) {
         tbl
           .string('password', 128)
           .notNullable();
-        
-        tbl.string('title', 128);
-        
-        tbl.string('tagline', 128);
-    
-        tbl.float('timeLength');
       });
     
       await knex.schema.createTable('recipes', tbl => {
@@ -25,10 +19,6 @@ exports.up = async function(knex, Promise) {
         tbl
           .integer('user_id')
           .notNullable()
-          .references('id')
-          .inTable('users')
-          .onDelete('CASCADE')
-          .onUpdate('CASCADE');
     
         tbl
           .string('title')
@@ -41,34 +31,18 @@ exports.up = async function(knex, Promise) {
       });
     
       await knex.schema.createTable('ingredients', tbl => {
-        tbl.increments();
-    
+        tbl.increments('ingredients_id');
+        
         tbl
-          .integer('recipe_id')
+          .integer('ingredient_name')
           .notNullable()
-          .references('id')
-          .inTable('recipes')
-          .onDelete('CASCADE')
-          .onUpdate('CASCADE')
-    
-        tbl
-          .string('name')
-          .notNullable();
       });
     
       await knex.schema.createTable('instructions', tbl => {
-        tbl.increments();
+        tbl.increments('instructions_id');
     
         tbl
-          .integer('recipe_id')
-          .notNullable()
-          .references('id')
-          .inTable('recipes')
-          .onDelete('CASCADE')
-          .onUpdate('CASCADE')
-    
-        tbl
-          .string('name')
+          .string('instruction_steps')
           .notNullable();
       });
     

@@ -1,62 +1,56 @@
 const router = require('express').Router();
+const Users = require('../users/users-model');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const { 
+  checkPasswordLength, 
+  checkUsernameExists, 
+  checkUsernameFree,
+} = require('../../middleware/auth-middleware');
 
-const db = require('../users/users-model'); // are you sure?
-const secrets = require('../../config/secrets');
+router.post('/register', checkPasswordLength, checkUsernameFree, async (req, res, next) => {
+  const { username, password } = await req.body;
+  const hash = await bcrypt.genSaltSync(password, 8);
 
-// for endpoints beginning with /api/auth
-router.post('/register', (req, res) => {
-  let user = req.body;
-  const hash = bcrypt.hashSync(user.password, 10); // 2 ^ n
-  user.password = hash;
-  console.log(hash)
-  db.add(user)
-    .then(user => {
-      const token = generateToken(user); // <<<<<<<<<<<<<<<<<<<<<<<<<
-
-      res.status(201).json({username: user.username, title: user.title, tagline: user.tagline, token});
+  Users.add({ username, password: hash })
+    .then(saved => {
+      res.status(201).json(saved)
     })
-    .catch(error => {
-      res.status(500).json({message: "Unable to create user."});
-    });
+    .catch(next)
 });
 
-router.post('/login', (req, res) => {
-  let { username, password } = req.body;
+router.post("/login", checkUsernameExists, (req, res, next) => {
+  const { password } = req.body;
+  if (bcrypt.compareSync(password, req.user.password)) {
+    req.session.user = req.user
+    res.json({ message: `Welcome ${req.user.username}`})
+  } else {
+    next({ status: 401, message: 'Invalid credentials'})
+  }
+  
+});
 
-  db.findBy({ username })
-    .first()
-    .then(user => {
-      if (user && bcrypt.compareSync(password, user.password)) {
-        const token = generateToken(user); // <<<<<<<<<<<<<<<<<<<<<<<<<
 
-        res.status(200).json({
-          username: user.username,
-          title: user.title,
-          tagline: user.tagline,
-          token
-        });
-      } else {
-        res.status(401).json({ message: 'Invalid Credentials' });
+router.get("/logout", (req, res, next) => {
+  if(req.session.user){
+    req.session.destroy(err => {
+      if(err) {
+        next(err)
+      }else{
+        res.status(200).json({ message: 'logged out'})
       }
     })
-    .catch(error => {
-      res.status(500).json(error);
-    });
+  } else{
+    res.status(200).json({ message: 'no session'})
+  }
 });
 
-function generateToken(user) {
-  const payload = {
-    subject: user.id, // standard claim = sub
-    username: user.username
-  };
-
-  const options = {
-    expiresIn: '7d'
-  };
-
-  return jwt.sign(payload, secrets.jwtSecret, options);
-}
+// router.get('/', restricted, async (req, res, next) => {
+//   try {
+//     const users = Users.find()
+//     res.json(users)
+//   } catch(err) {
+//     next(err)
+//   }
+// });
 
 module.exports = router;
