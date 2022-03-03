@@ -11,18 +11,13 @@ router.get('/:id', async (req, res, next) => {
   }
 }); 
 
-router.get('/', (req, res) => {
-  console.log(req.user);
-  const userId = req.params.user_id;
-
-  Recipes
-    .getRecipes(userId)
-    .then(recipes => {
-        res.status(200).json({recipes});
-    })
-    .catch(err => {
-      res.status(500).json({message: 'Could not retrieve recipes.'})
-    });
+router.get('/', async (req, res, next) => {
+  try {
+    const recipe = await Recipes.getRecipes(req.params.id)
+    res.status(200).json(recipe)
+} catch (err){
+    next(err)
+}
 });
 
 // router.get('/:id',  (req, res) => {
