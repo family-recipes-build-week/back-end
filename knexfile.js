@@ -1,5 +1,5 @@
 const sharedConfig = {
-  client: 'sqlite3',
+  client: 'postgresql',
   useNullAsDefault: true,
   migrations: {
     directory: './data/migrations',

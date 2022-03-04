@@ -33,6 +33,7 @@
     "heroku-cli": "^7.0.9",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.15",
+    "postgresql": "^0.0.1",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
