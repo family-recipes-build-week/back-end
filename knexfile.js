@@ -1,5 +1,5 @@
 const sharedConfig = {
-  client: 'postgresql',
+  client: 'pg',
   useNullAsDefault: true,
   migrations: {
     directory: './data/migrations',
@@ -18,7 +18,7 @@ const sharedConfig = {
 module.exports = {
   development: {
     ...sharedConfig,
-    connection: { filename: './data/recipes.db3' },
+    connection: { filename: './data/recipes.sql' },
   },
   testing: {
     ...sharedConfig,
