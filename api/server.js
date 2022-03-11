@@ -26,7 +26,7 @@ server.use('/login', (req, res) => {
 server.get('/', (req, res) => {
   res.send(
       `
-      <h6>Can get all reipes</h6>
+      <h6>Can get all recipes</h6>
       [GET] /api/recipes,<br>
 
       <h6>Can get recipes by id</h6>
@@ -43,7 +43,7 @@ server.get('/', (req, res) => {
 
       <h6>Can register a user</h6>
       [POST] /api/users/register<br>
-      
+
       <h6>Can log a user out</h6>
       [POST] /api/users/logout<br>
       `    
