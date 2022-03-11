@@ -41,7 +41,7 @@ router.post('/register', (req, res, next) => {
 
 // CAN LOGIN A USER
 router.post('/login', checkUsernameExists, (req, res, next) => {
-  if(bcrypt.genSalt(req.body.password, req.user.password)) {
+  if(bcrypt.hashSync(req.body.password, req.user.password)) {
     const token = buildToken(req.user)
     res.json({
       status: 200,
