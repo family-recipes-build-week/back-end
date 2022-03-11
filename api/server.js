@@ -25,12 +25,12 @@ server.use('/login', (req, res) => {
 
 server.get('/', (req, res) => {
   res.send(
-      `[GET] /api/recipes,
-      [GET] /api/recipes/{id}
-      [POST] /api/users
-      [GET] /api/users/{id}
-      [POST] /api/users/login
-      [POST] /api/users/register`    
+      `[GET] /api/recipes,<br>
+      [GET] /api/recipes/{id}<br>
+      [POST] /api/users<br>
+      [GET] /api/users/{id}<br>
+      [POST] /api/users/login<br>
+      [POST] /api/users/register<br>`    
   );
  });
 
