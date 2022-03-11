@@ -1,3 +1,5 @@
+/* eslint-disable no-unexpected-multiline */
+/* eslint-disable no-undef */
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -25,7 +27,15 @@ server.use('/login', (req, res) => {
 
 server.get('/', (req, res) => {
   res.send(
-    'Server running...'
+    
+      [GET] /api/recipes
+      [GET] /api/recipes/id
+      [POST] /api/users
+      [GET] /api/users/id
+      [POST] /api/users/login
+      [POST] /api/auth/login
+      [POST] /api/auth/register
+    
   );
  });
 

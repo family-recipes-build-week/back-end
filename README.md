@@ -1,3 +1,9 @@
+# Secret Family Recipes
+
+## Introuction
+## An API created using `Node.js`, `Express` and `Knex` that provides register, login and logout functionality.
+
+
 Can get all recipes:
 - [ ] `[GET] /api/recipes`
 
