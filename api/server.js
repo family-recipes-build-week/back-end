@@ -26,26 +26,26 @@ server.use('/login', (req, res) => {
 server.get('/', (req, res) => {
   res.send(
       `
-      <h6>Can get all recipes</h6>
-      [GET] /api/recipes,<br>
-
-      <h6>Can get recipes by id</h6>
-      [GET] /api/recipes/:id<br>
-
-      <h6>Can get all users</h6>
-      [POST] /api/users<br>
-
-      <h6>Can get users by id</h6>
-      [GET] /api/users/:id<br>
-
-      <h6>Can log a user in</h6>
-      [POST] /api/users/login<br>
-
-      <h6>Can register a user</h6>
-      [POST] /api/users/register<br>
-
-      <h6>Can log a user out</h6>
-      [POST] /api/users/logout<br>
+      Can get all recipes
+      <h4>[GET] /api/recipes</h4>
+      <br>
+      Can get recipes by id
+      <h4>[GET] /api/recipes/:id</h4>
+      <br>
+      Can get all users
+      <h4>[POST] /api/users</h4>
+      <br>
+      Can get users by id
+      <h4>[GET] /api/users/:id</h4>
+      <br>
+      Can log a user in
+      <h4>[POST] /api/users/login</h4>
+      <br>
+      Can register a user
+      <h4>[POST] /api/users/register</h4>
+      <br>
+      Can log a user out
+      <h4>[POST] /api/users/logout</h4>
       `    
   );
  });
