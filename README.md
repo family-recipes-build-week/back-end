@@ -21,6 +21,9 @@ Can get user by id
 Can log a user in:
 - [ ] `[POST] /api/users/login`
 
+Can log a user out:
+- [ ] `[POST] /api/users/logout`
+
 
 Can register a new user:
 - [ ] `[POST] /api/users/register`
